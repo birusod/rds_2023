@@ -66,51 +66,84 @@ cap <- paste0(
 # Plot --------------------------------------------------------------------
 
 cases |> 
-  mutate(court = fct_lump_n(court, n = 10)) |> 
-  count(court, sort = TRUE) |> 
-  ggplot(aes(n, fct_reorder(court, n))) +
-  geom_col()
-
- cases |> 
-   count(jurisdiction, sort = TRUE) |> 
-   ggplot(aes(n, fct_reorder(jurisdiction, n))) +
-   geom_col()
-
-cases |> 
-  count(fair_use_found, sort = TRUE) |> 
-  ggplot(aes(fair_use_found, n)) +
-  geom_col()
-
-cases |> 
-  mutate(court = fct_lump_n(court, n = 10)) |> 
-  count(court, fair_use_found, sort = TRUE) |> 
-  ggplot(aes(n, fct_reorder(court, n), fill = fair_use_found)) +
-  geom_col(position = 'dodge') +
-  labs(fill = 'Fair Use Found', y = '', x = '',
-       title  = 'Cases Distribution by  Court') +
+  mutate(court = fct_lump(court, 10)) |> 
+  filter(fair_use_found) |> 
+  count(court) |> 
+  mutate(court  = fct_reorder(court, n)) |> 
+  ggplot(aes(n, court, fill  =  if_else(court == 'Other', 'yes', 'no'))) +
+  geom_col(show.legend = FALSE) +
+  labs(y = '', x = '', 
+       title = 'By Court',
+       subtitle = 'Fair Use Found') +
   scale_x_continuous(expand = c(0,0)) +
+  scale_fill_manual(values = c('dodgerblue', 'grey')) +
   theme_light() +
-  theme(legend.position = 'top') +
-  guides(fill = guide_legend(title.position = "top", title.hjust = 0.5))
+  theme(
+    plot.title = element_text(face = 'bold', size = 20, color = '#DC143C'),
+    plot.subtitle = element_text(face = 'bold', size = 15, color = 'dodgerblue')
+    ) -> p1
 
 cases |> 
-  count(jurisdiction, fair_use_found, sort = TRUE) |> 
-  ggplot(aes(n, fct_reorder(jurisdiction, n), fill = fair_use_found)) +
-  geom_col(position = 'dodge') +
-  labs(fill = 'Fair Use Found', y = '', x = '',
-       title  = 'Cases Distribution by  Jurisdiction') +
+  mutate(court = fct_lump(court, 10)) |> 
+  filter(!fair_use_found) |> 
+  count(court) |> 
+  mutate(court  = fct_reorder(court, n)) |> 
+  ggplot(aes(n, court, fill  =  if_else(court == 'Other', 'yes', 'no'))) +
+  geom_col(show.legend = FALSE) +
+  labs(y = '', x = '', subtitle = 'Fair Use Not Found') +
   scale_x_continuous(expand = c(0,0)) +
+  scale_fill_manual(values = c('firebrick', 'grey')) +
   theme_light() +
-  theme(legend.position = 'top') +
-  guides(fill = guide_legend(title.position = "top", title.hjust = 0.5))
+  theme(
+    plot.subtitle = element_text(
+      face = 'bold', size = 15, color = 'firebrick')) -> p2
+
+cases |> 
+  mutate(jurisdiction = fct_lump(jurisdiction, 10)) |> 
+  filter(fair_use_found) |> 
+  count(jurisdiction) |> 
+  mutate(jurisdiction  = fct_reorder(jurisdiction, n)) |> 
+  ggplot(aes(n, jurisdiction, fill  =  if_else(jurisdiction == 'Other', 'yes', 'no'))) +
+  geom_col(show.legend = FALSE) +
+  labs(y = '', x = '', 
+       title = 'By Jurisdiction',
+       subtitle = 'Fair Use Found') +
+  scale_x_continuous(expand = c(0,0)) +
+  scale_fill_manual(values = c('skyblue', 'grey')) +
+  theme_light() +
+  theme(
+    plot.title = element_text(face = 'bold', size = 20, color = 'navy'),
+    plot.subtitle = element_text(face = 'bold', size = 15, color = 'skyblue')
+  ) -> p3
+
+cases |> 
+  mutate(jurisdiction = fct_lump(jurisdiction, 10)) |> 
+  filter(!fair_use_found) |> 
+  count(jurisdiction) |> 
+  mutate(jurisdiction  = fct_reorder(jurisdiction, n)) |> 
+  ggplot(aes(n, jurisdiction, fill  =  if_else(jurisdiction == 'Other', 'yes', 'no'))) +
+  geom_col(show.legend = FALSE) +
+  labs(y = '', x = '', subtitle = 'Fair Use Not Found') +
+  scale_x_continuous(expand = c(0,0)) +
+  scale_fill_manual(values = c('#c4626e', 'grey')) +
+  theme_light() +
+  theme(
+    plot.subtitle = element_text(
+      face = 'bold', size = 15, color = '#c4626e')) -> p4
 
 
 # Save gif ----------------------------------------------------------------
 
-# gg_playback(
-#   name = file.path("2023", "2023-08-29", paste0("20230829", ".gif")),
-#   first_image_duration = 4,
-#   last_image_duration = 20,
-#   frame_duration = .25,
-#   background = bg_col
-# )
+
+p <- (p1 + p3) / (p2 + p4)
+p
+
+ggsave(
+  filename = file.path(new_folder, "fair_use.png"),
+  device = "png",
+  width = 10,
+  height = 6,
+  units = "in",
+  dpi = 300
+)
+getwd()
