@@ -132,14 +132,6 @@ p2
 ggsave('2023/w36_Union_USA/union_members_2022.png', p1)
 
 pdir <- '/Users/birusod/Documents/DataScienceDocs/GitProjects/R4DS/rds_2023/2023/w36_Union_USA'
-gg_record(
-  dir = pdir,
-  dpi = 300,
-  width = 20,
-  height = 9,
-  units = 'cm'
-)
-p1
 
 gg_record(
   dir = file.path(pdir, "plot1"),
