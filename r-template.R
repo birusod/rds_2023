@@ -1,7 +1,9 @@
 
 # Load packages -----------------------------------------------------------
 
-pacman::p_load(tidyverse, janitor, scales, showtext, patchwork, ggtext, glue)
+pacman::p_load(
+  tidytuesdayR, tidyverse, janitor, scales, 
+  showtext, patchwork, ggtext, glue)
 
 
 # Load data ---------------------------------------------------------------

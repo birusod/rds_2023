@@ -5,9 +5,9 @@
 
 # only need to update these parameters and Alt+Cmd+r
 # ****************************************************************
-dd <- '2023-08-28'
-wk <- 'w35_Fair Use'
-tt <- 'Refugees'
+dd <- '2023-09-12'
+wk <- 'w37_GHD'
+tt <- 'The Global Human Day'
 #*****************************************************************
 
 use_tt_template <- function(
