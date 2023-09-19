@@ -8,7 +8,7 @@
 - <a href="https://cran.r-project.org/web/packages/d3r/d3r.pdf">d3r:</a> 
 - <a href="https://r-graph-gallery.com/treemap.html">treemap:</a>
 - <a href="https://github.com/ropensci/rnaturalearth">rnaturalearth:</a>
-<a href="https://biostats-r.github.io/biostats/workingInR/140_maps.html">rnaturalearthdata:</a>
+- <a href="https://biostats-r.github.io/biostats/workingInR/140_maps.html">rnaturalearthdata:</a>
 
 
 
