@@ -5,10 +5,10 @@
 **New libraries:**
 - <a href="https://jkunst.com/highcharter/index.html/">highcharter:</a> 
 - <a href="https://cran.r-project.org/web/packages/sunburstR/vignettes/sunburst-2-0-0.html">sunburstR:</a> 
-- <a href="https://www.w3schools.com/">d3r:</a> 
-- <a href="https://www.w3schools.com/">treemap:</a>
-- <a href="https://www.w3schools.com/">rnaturalearth:</a>
-<a href="https://www.w3schools.com/">rnaturalearthdata:</a>
+- <a href="https://cran.r-project.org/web/packages/d3r/d3r.pdf">d3r:</a> 
+- <a href="https://r-graph-gallery.com/treemap.html">treemap:</a>
+- <a href="https://github.com/ropensci/rnaturalearth">rnaturalearth:</a>
+<a href="https://biostats-r.github.io/biostats/workingInR/140_maps.html">rnaturalearthdata:</a>
 
 
 
@@ -19,7 +19,11 @@
   <img src="/2023/2023-09-12/20230912.png" width="60%">
 </p>
 
-
+**TIL**
+  - How to make donut charts with *highcharter*, 
+ <a href="https://r-graph-gallery.com/128-ring-or-donut-plot.html">ggplot2</a>
+  - mapping with: *highcharter*, *rnaturalearth*
+  - How to make sunburst chart with: *highcharter*, *sunburstR*, *d3r* and  *treemap*
 
 
 <p align="center">
