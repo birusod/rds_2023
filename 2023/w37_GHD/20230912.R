@@ -267,7 +267,7 @@ pw2 <- pw + theme(legend.position = "none")
 le1 <- cowplot::get_legend(pw)
 cowplot::plot_grid(pw2, le1, nrow = 2, rel_heights = c(6, 1))
 pw3 <- pw2 + plot_annotation(
-  title = 'The Global Human Day: West Africa',
+  title = 'The Global Human Day',
   subtitle = 'Hours per day combined for the country by  activity',
   caption = 'TidyTuesday | Week-37',
   theme = theme(
