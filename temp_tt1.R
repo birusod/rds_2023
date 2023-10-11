@@ -5,9 +5,9 @@
 
 # only need to update these parameters and Alt+Cmd+r
 # ****************************************************************
-dd <- '2023-09-26'
-wk <- 'w39_TedLasso'
-tt <- 'Roy Kent F**k count'
+dd <- '2023-10-10'
+wk <- 'w41_US_Haunted_Places'
+tt <- 'Haunted Places in the United States'
 #*****************************************************************
 
 use_tt_template <- function(
