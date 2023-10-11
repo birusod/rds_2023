@@ -1,7 +1,9 @@
 <h1 align="center"> Haunted Places in the United States </h1>
 
 <h2 align="left"> 1. Libraries and Data sets </h2>
-<h3>Announcement regarding retiring R libraries:</h3>
+<br>
+<h3>Announcement regarding retiring R libraries</h3>
+
 <a href="https://geocompx.org/post/2023/rgdal-retirement/index.html">annoucement</a>
 <ul>
   <li>rgdal</li>
