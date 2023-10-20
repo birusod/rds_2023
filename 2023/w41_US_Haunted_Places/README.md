@@ -10,6 +10,9 @@
   <li>rgeos</li>
   <li>maptools</li>
 </ul>
+
+Recommended alternative: <a href='https://r-spatial.github.io/sf/'> *sf* library. </a>
+
 <h2 align="left"> 2. Data Overview </h2>
 <h2 align="left"> 3. Data Wrangling </h2>
 <h2 align="left"> 4. Viz </h2>
