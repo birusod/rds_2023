@@ -3,11 +3,11 @@
 # https://nrennie.rbind.io/blog/script-templates-r/
 
 
-# only need to update these parameters and Alt+Cmd+r
+# only need to update these parameters and Alt+Cmd+r (Cmd+A+Enter)
 # ****************************************************************
-dd <- '2023-10-10'
-wk <- 'w41_US_Haunted_Places'
-tt <- 'Haunted Places in the United States'
+dd <- '2023-10-17'
+wk <- 'w42_Taylor_Swift'
+tt <- 'Taylor Swift  Songs'
 #*****************************************************************
 
 use_tt_template <- function(
