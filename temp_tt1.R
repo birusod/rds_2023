@@ -5,9 +5,9 @@
 
 # only need to update these parameters and Alt+Cmd+r (Cmd+A+Enter)
 # ****************************************************************
-dd <- '2023-10-17'
-wk <- 'w42_Taylor_Swift'
-tt <- 'Taylor Swift  Songs'
+dd <- '2023-10-24'
+wk <- 'w43_Patient_Risk'
+tt <- 'Patient Risk Profiles'
 #*****************************************************************
 
 use_tt_template <- function(
