@@ -21,8 +21,12 @@ df_raw |> head() |> view()
 # 3. Load fonts and colors   ---------------------------------------
 # 3.1 fonts and text ---------------------------------------
 font_add_google("Roboto", "roboto")
+font_add_google("Eater", "eater")
+font_add_google("Ubuntu", "ubuntu")
 showtext_auto()
 
+note_font1 <- "ubuntu"
+note_font2 <- "eater"
 
 # social <- nrBrand::social_caption(
 #   bg_colour = bg_col,
@@ -156,12 +160,9 @@ dem_share_year <-
 dsy_joined_cont <- gsf_seleted |> 
   inner_join(dem_share_year, by = join_by(code))
 
-dsy_joined_cont |> filter(code == 'ND')
 
-summary(dsy_joined_cont$swing_rescaled)
-dsy_joined_cont |> filter(swing_rescaled >= 3)
-s10 <- sample(10)
-cut(s10, breaks = c(1, 2, 3, 4))
+#s10 <- sample(10)
+#cut(s10, breaks = c(1, 2, 3, 4))
     
     
 dsy_joined_disc <- gsf_seleted |> 
@@ -174,9 +175,9 @@ dsy_joined_disc <- gsf_seleted |>
       include.lowest = TRUE
     )) 
 
-state_code_swing <-  dsy_joined |> count(code, swing)
+state_code_swing <-  dsy_joined_cont |> count(code, swing)
 state_code_bins <-  dsy_joined_disc |> count(code, sr_bin)
-state_code_bins |> count(sr_bin)
+
 
 # 5. Plots --------------------------------------------------------------------
 
@@ -245,7 +246,7 @@ gsf_joined |>
 
 gg <- gsf_joined |> 
   filter(year %in% c(1976, 1982, 1992, 2002, 2012, 2022),
-         party == 'DEMOCRAT') |> # REPUBLICAN  /  DEMOCRAT
+         party == 'REPUBLICAN') |> # REPUBLICAN  /  DEMOCRAT
   ggplot(aes(fill = bin)) + 
   geom_sf() +
   geom_sf_text(aes(label = code), 
@@ -267,7 +268,7 @@ gg + scale_fill_manual(
 ) +
   labs(
     title = "TOTAL VOTES BY STATE",
-    subtitle = "DEMOCRAT PARTY", # REPUBLICAN  /  DEMOCRAT
+    subtitle = "REPUBLICAN PARTY", # REPUBLICAN  /  DEMOCRAT
     caption = "DC not labelled"
   ) +
   theme(
@@ -291,8 +292,9 @@ gg + scale_fill_manual(
     strip.text = element_text(
       color = '#ee7b06', size = 15,
       face = 'bold'),
-  )  -> gg_dem
-
+  )  -> gg_rep
+gg_dem # democrat party
+gg_rep # republican party
 
 # 5.5 comparison between party votes by state -------------
 
@@ -329,6 +331,8 @@ gd +
     values = met_pal,
     name = NULL,
     guide = guide_legend(
+      title = 'Swing Votes from 1976\nto 2022 (scaled)',
+      title.hjust = .5,
       keyheight = unit(4, units = "mm"),
       keywidth = unit(8, units = "mm"),
       label.position = "top",
@@ -345,7 +349,7 @@ gd +
     plot.title = element_text(
       size = 22, color = "#178a94", 
       family = 'roboto', face = 'bold',
-      margin = margin(b = -0.1, t = 0.4, l = 2, unit = "cm")),
+      margin = margin(b = .5, t = 0.4, l = 2, unit = "cm")),
     plot.subtitle = element_text(
       size = 14, color = "#208cc0",
       family = 'roboto', face = 'bold.italic'),
@@ -354,7 +358,9 @@ gd +
     panel.background = element_rect(fill = "grey80", color = NA), 
     legend.background = element_blank(),
     legend.text = element_text(color = '#27fdf5', size = 10),
-    legend.position = c(0.6, 1),
+    legend.position = c(0.55, 1),
+    legend.title = element_text(
+      color = '#cf368a', size = 12, face = 'bold'), # #924099
     strip.background = element_blank(),
     legend.key = element_blank(),
     strip.text = element_text(
@@ -371,7 +377,7 @@ dsy_joined_cont |>
   geom_col()  +
   scale_x_continuous(
     expand = c(0, 0),
-    limits = c(-50, 50))
+    limits = c(-50, 40))
 
 # Lollipop 
 djc_lollipop <-  dsy_joined_cont |> 
@@ -381,12 +387,13 @@ djc_lollipop <-  dsy_joined_cont |>
              swing < 0 ~ 'Neg',
              TRUE ~ 'Neu') |> fct_relevel('Pos', 'Neu', 'Neg'),
          lab = if_else(swing <= 0, 0, 1),
-         nudge = if_else(swing > 0, -1, 2)
+         nudge = if_else(swing > 0, -1.5, 1.5)
          )
 
 ggl <- djc_lollipop |>
   ggplot(aes(swing, name, color = group))  +
   geom_text(aes(y = name, x = 0, label = name), 
+            size = 3,
             hjust=djc_lollipop$lab,
             nudge_x = djc_lollipop$nudge,
             show.legend = FALSE) +
@@ -399,8 +406,29 @@ ggl <- djc_lollipop |>
   scale_color_manual(values = c('#4585b7', 'gray70', '#b83326')) +
   scale_x_continuous(
     expand = c(0, 0),
-    limits = c(-50, 50))  +
+    limits = c(-50, 40),
+    breaks = c(-25, 0, 25))  +
   labs(x = NULL, y = NULL) 
+
+notes_title1 <- glue('From 1976 to 2022:')
+notes_text1 <- glue(
+  '15 States had a *positive* swing in favor of DEM\n',
+  'VT-AK-MA-CO-NM with largest swing votes'
+  )
+
+notes_text2 <- glue('WA State had no swing votes observed')
+
+notes_text3 <- glue(
+  '34 States had a *negative* swing votes in favor of GOP\n',
+  'AK-AL-WV-NV-ND with largest swing votes'
+)
+
+subtitle <- 
+  glue(
+    "From 1976 to 2022: <br>, <span style='color: #4fa7d3'>**Democrats**</span>",
+    "<span style='color: #ea5d56'>**Republicans**</span>, and <span style='color: #739627'>**other affiliations**</span>.<br>",
+    "<span>*Note that the District of Columbia is shown here but its",
+    "representative doesn't have any voting power in the House.*</span>")
 
 ggl +
   labs(
@@ -410,11 +438,12 @@ ggl +
   ) +
   theme(
     axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    axis.text.x = element_text(size = 10, face = 'bold'),
+    text = element_text(color = "#22211d"),
     plot.background = element_blank(),
     panel.background = element_blank(),
     panel.grid.minor.x = element_blank(),
-    axis.text.y = element_blank(),
-    text = element_text(color = "#22211d"),
     plot.title.position = 'plot',
     #plot.background = element_rect(fill = "black", color = NA), 
     plot.title = element_text(
@@ -422,12 +451,18 @@ ggl +
       family = 'roboto', face = 'bold',
       margin = margin(b = -0.1, t = 0.4, l = 2, unit = "cm")),
     plot.subtitle = element_text(
-      size = 14, color = "white",
+      size = 14, color = "dodgerblue",
       family = 'roboto', face = 'bold.italic'),
-    plot.caption = element_text(color = 'white', size = 8, face = 'italic'),
-    #panel.grid = element_line(color = 'black'),
-    axis.text.x = element_text(color = 'white', size = rel(1.2))
-  )
+    plot.caption = element_text(color = 'white', size = 8, face = 'italic')
+  ) +
+  annotate('text', x = -50, y  = 45,  label  = notes_title1, size = 5,
+          fontface = "bold", family = "roboto", color = '#924099', hjust = 0) +
+  annotate('text', x = -49, y  = 40,  label  = notes_text1, size = 3,
+           fontface = "bold", family = "roboto", color = '#4585b7', hjust = 0) +
+  annotate('text', x = -49, y  = 35,  label  = notes_text2, size = 3,
+           fontface = "bold", family = "roboto", color = 'gray70', hjust = 0) +
+  annotate('text', x = -49, y  = 30,  label  = notes_text3, size = 3,
+           fontface = "bold", family = "roboto", color = '#b83326', hjust = 0)
     
 
 # Save gif ----------------------------------------------------------------
@@ -441,5 +476,4 @@ ggl +
 # )
 
 
-gg_dem # democrat party
-gg_rep # republican party
+
