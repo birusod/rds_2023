@@ -121,33 +121,33 @@ by_gender_plot <- function(data, gvar, cvar, ptitle, sub, legend, flip = F){
 }
 
 ds |> by_gender_plot(gender, marital_status,
-                 ptitle = 'Gender Distribution', 
-                 sub = 'By marital status',
-                 legend = 'Gender')
+                     ptitle = 'Gender Distribution', 
+                     sub = 'By marital status',
+                     legend = 'Gender')
 
 ds |> by_gender_plot(gender, age_group,
-                 ptitle = 'Gender Distribution', 
-                 sub = 'By age group',
-                 legend = 'Gender')
+                     ptitle = 'Gender Distribution', 
+                     sub = 'By age group',
+                     legend = 'Gender')
 ds |> by_gender_plot(gender, zone,
-                 ptitle = 'Gender Distribution', 
-                 sub = 'By zone',
-                 legend = 'Gender')
+                     ptitle = 'Gender Distribution', 
+                     sub = 'By zone',
+                     legend = 'Gender')
 
 ds |> by_gender_plot(gender, state, flip = T,
-                 ptitle = 'Gender Distribution', 
-                 sub = 'By state',
-                 legend = 'Gender')
+                     ptitle = 'Gender Distribution', 
+                     sub = 'By state',
+                     legend = 'Gender')
 
 ds |> by_gender_plot(gender, category, flip = T,
-                 ptitle = 'Gender Distribution', 
-                 sub = 'By category',
-                 legend = 'Gender')
+                     ptitle = 'Gender Distribution', 
+                     sub = 'By category',
+                     legend = 'Gender')
 
 ds |> by_gender_plot(gender, occupation, flip = T,
-                 ptitle = 'Gender Distribution', 
-                 sub = 'By age group',
-                 legend = 'Gender')
+                     ptitle = 'Gender Distribution', 
+                     sub = 'By age group',
+                     legend = 'Gender')
 
 # Plotting library: highchartr -----------------------------
 # resources links in readme
@@ -182,12 +182,12 @@ ds |>
     style = list(color = "firebrick", 
                  fontFamily = "eater", 
                  fontSize = "26px")) |> 
-      hc_subtitle(
-        text = '<i>Buyers By Age group, Gender & Zone</i>',
-        style = list(fontFamily = "eater", 
-                     fontSize = "20px",
-                     color = 'navy'))
-  
+  hc_subtitle(
+    text = '<i>Buyers By Age group, Gender & Zone</i>',
+    style = list(fontFamily = "eater", 
+                 fontSize = "20px",
+                 color = 'navy'))
+
 
 # dependency wheel
 highchart() |> 
@@ -291,7 +291,7 @@ ds |> plot_bar_chart(
   grpvar = state, 
   subtitle = "state", 
   color = mcols[5])
- 
+
 # Age group by gender ----------- 
 ds |> 
   count(age_group, marital_status) |> 
@@ -320,7 +320,7 @@ ds |>
 hcc <- ds |> 
   count(age_group, marital_status) |> 
   hchart('column', hcaes(x = 'age_group', y = 'n', group = 'marital_status'),
-  stacking = "normal") |> 
+         stacking = "normal") |> 
   hc_title(text = "Marital Status By Age Group") 
 hcc |> hc_add_theme(hc_theme_elementary())
 hcc |> hc_add_theme(hc_theme_monokai())
@@ -369,9 +369,9 @@ gender_data |>
             itemStyle = list(
               fontSize = "20px",  
               fontWeight = "bold")
-            )
-  
-  
+  )
+
+
 # Histogram / Density of sales amounts  -------------
 
 dsa <- ds |> filter(!is.na(amount))
@@ -460,7 +460,7 @@ dsa |>
     group_var = zone, 
     add_outliers = FALSE,
     name = "Sales Amount")
-  
+
 bx_amount <- data_to_boxplot(dsa, amount, group_var = zone, add_outliers = FALSE)
 highchart() |>
   hc_xAxis(type = "category") |>
