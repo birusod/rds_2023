@@ -5,9 +5,9 @@
 
 # only need to update these parameters and Alt+Cmd+r (Cmd+A+Enter)
 # ****************************************************************
-dd <- '2023-11-07'
-wk <- 'w45_House_Elections'
-tt <- 'US House Election Results'
+dd <- '2023-11-14'
+wk <- 'w46_Diwali_Sales'
+tt <- 'Diwali Sales'
 #*****************************************************************
 
 use_tt_template <- function(
