@@ -13,10 +13,14 @@
 
 
 <h2 align="left"> 2. Data Overview </h2>
+
+
 <h2 align="left"> 3. Data Wrangling </h2>
+
 <h2 align="left"> 4. Viz </h2>
+
 <p align="center">
-  <img src="/2023/2023-09-12/20230912.png" width="60%">
+  <img src="/2023/w37_GHD/Plots_w37/final_plot_w37.png" width="60%">
 </p>
 
 **TIL**
@@ -25,8 +29,4 @@
   - mapping with: *highcharter*, *rnaturalearth*
   - How to make sunburst chart with: *highcharter*, *sunburstR*, *d3r* and  *treemap*
 
-
-<p align="center">
-  <img src="/2023/2023-09-12/20230912.gif" width="60%">
-</p>
 
