@@ -3,11 +3,11 @@
 # https://nrennie.rbind.io/blog/script-templates-r/
 
 
-# only need to update these parameters and Alt+Cmd+r (Cmd+A+Enter)
+# only need to update these 3 parameters, then: Alt+Cmd+r (Cmd+A+Enter)
 # ****************************************************************
-dd <- '2023-11-14'
-wk <- 'w46_Diwali_Sales'
-tt <- 'Diwali Sales'
+dd <- '2023-11-21'
+wk <- 'w47_R_Ladies_Events'
+tt <- 'R-Ladies Chapter Events'
 #*****************************************************************
 
 use_tt_template <- function(
@@ -27,6 +27,11 @@ date_strip <- stringr::str_remove_all(date_chr, "-")
 
 
 new_folder <- file.path(yr, week)
+
+# check if folder exist (to avoid overwriting)
+if (file.exists(new_folder)) {
+  stop("Please check that date and folder name are correct!")
+}
 
 if (!file.exists(new_folder)) {
   dir.create(new_folder, recursive = TRUE)
