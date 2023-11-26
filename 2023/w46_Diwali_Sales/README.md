@@ -21,7 +21,7 @@ More on that later
 
 Today's objective: create custom functions to visualize a selected categorical 
 variables that:
- - use ggplot adn highcharter
+ - use ggplot and highcharter
  - are flexible to update grouping variable, subtile, fill color...
 
 
