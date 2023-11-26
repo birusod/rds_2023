@@ -1,9 +1,11 @@
 <h1 align="center"> R-Ladies Chapter Events </h1>
-***
-***
+
+
 <h2 align="left"> 1. Libraries and Data sets </h2>
-***
+
+
 **Libraries explored:**
+
 - <a href="https://github.com/GuangchuangYu/shadowtext">shadowtext github</a>: for better labelling.
 
 - <a href="https://wilkelab.org/ggtext/">ggtext by C.O. Wilke</a>: Very helpful when rendered text with font, color and style.
