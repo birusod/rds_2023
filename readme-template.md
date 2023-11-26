@@ -6,13 +6,13 @@
 <h2 align="left"> 4. Viz </h2>
 
 <p align="center">
-  <img src="/yr/file_path/file_name.png" width="60%">
+  <img src="/yr/wkf/pfolder/file_name.png" width="60%">
 </p>
 
 
 
 
 <p align="center">
-  <img src="/yr/file_path/file_name.gif" width="60%">
+  <img src="/yr/wkf/pfolder/file_name.gif" width="60%">
 </p>
 

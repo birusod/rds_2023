@@ -3,15 +3,20 @@
 # https://nrennie.rbind.io/blog/script-templates-r/
 
 
-# only need to update these 3 parameters, then: Alt+Cmd+r (Cmd+A+Enter)
+# only need to update these 5 parameters, then: Alt+Cmd+r (Cmd+A+Enter)
 # ****************************************************************
-dd <- '2023-11-21'
-wk <- 'w47_R_Ladies_Events'
-tt <- 'R-Ladies Chapter Events'
+week_date <- '2023-11-21'
+current_week_folder <- 'w47_R_Ladies_Events'
+week_title <- 'R-Ladies Chapter Events'
+plot_folder <- 'plots_w47'
+final_plot <- 'final_plot_w47.png'
 #*****************************************************************
 
 use_tt_template <- function(
-    date_chr = dd, week = wk, title = tt, readme = TRUE) {
+    date_chr = week_date, 
+    week = current_week_folder, 
+    title = week_title, 
+    readme = TRUE) {
   # check date in correct format
   if (is.na(as.Date(date_chr, format = "%Y-%m-%d"))) {
     stop("'date_chr' in incorrect format. Should be yyyy-mm-dd.")
@@ -65,8 +70,8 @@ readme_txt <- readLines("readme-template.md")
 # replace placeholder text with variables
 readme_txt <- gsub(pattern = "title", replacement = title, x = readme_txt)
 readme_txt <- gsub(pattern = "yr", replacement = yr, x = readme_txt)
-readme_txt <- gsub(pattern = "date_chr", replacement = date_chr, x = readme_txt)
-readme_txt <- gsub(pattern = "date_strip", replacement = date_strip, x = readme_txt)
+readme_txt <- gsub(pattern = "wkf", replacement = current_week_folder, x = readme_txt)
+readme_txt <- gsub(pattern = "pfolder", replacement = plot_folder, x = readme_txt)
 
 # write to file
 writeLines(readme_txt, con = new_readme)
