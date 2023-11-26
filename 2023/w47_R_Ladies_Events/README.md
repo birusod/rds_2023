@@ -5,9 +5,13 @@
 ***
 **Libraries explored:**
 - <a href="https://github.com/GuangchuangYu/shadowtext">shadowtext github</a>: for better labelling.
+
 - <a href="https://wilkelab.org/ggtext/">ggtext by C.O. Wilke</a>: Very helpful when rendered text with font, color and style.
--  <a href="">colorspace</a>: For finding color palettes by category: seq-qual-div
+
+- <a href="">colorspace</a>: For finding color palettes by category: seq-qual-div
+
 - <a href="https://plotly.com/graphing-libraries/">plotly<a/> and <a href="https://plotly.com/r/plotly-fundamentals/">plotly R Fundamentals>: Barplot (Diverging) - Dumbbell - Pie - Donut.
+
 - <a href="">ggalt<a/>: Lollipop - Dumbbell
 
 <h2 align="left"> 2. Data Overview </h2>
