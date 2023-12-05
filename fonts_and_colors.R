@@ -1,3 +1,6 @@
+library(tidyverse)
+
+
 # Load fonts --------------------------------------------------------------
 
 font_add_google("Roboto", "roboto")
@@ -64,5 +67,25 @@ mtcars |>
   ggplot(aes(cyl, fill  = factor(cyl))) +
   geom_bar()  +
   scale_fill_pretty_d('Dark')
+
+# https://cararthompson.github.io/ophelia/index.html
+# token required for the Ophelia install
+palmerpenguins::penguins |>
+  ggplot(aes(x = 1,
+             fill = species),
+         stat = "count") +
+  geom_bar() +
+  xlim(c(-0.5, 2)) +
+  coord_polar(theta = "y") +
+  labs(fill = '',
+       title = "Perfectly proportional penguins",
+       subtitle = "Does anyone know if penguins like donuts?",
+       caption = "Data from {palmerpenguins}") +
+  theme_void() +
+  theme(legend.position = "right") +
+  scale_fill_pretty_d('Dark') +
+  theme(plot.title = ggtext::element_markdown(hjust = 0.5),
+        plot.subtitle = ggtext::element_textbox_simple(halign = 0.5, vjust = 1),
+        legend.position = "right")
 
 sessionInfo()
