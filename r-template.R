@@ -2,7 +2,7 @@
 # Load packages -----------------------------------------------------------
 
 pacman::p_load(
-  tidytuesdayR, tidyverse, janitor, scales, 
+  tidytuesdayR, tidyverse, janitor, scales, ggthemes,
   showtext, patchwork, ggtext, glue)
 
 

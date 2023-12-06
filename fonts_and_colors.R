@@ -40,6 +40,15 @@ pcols <- c('#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd',
 #        middle gray-curry yellow-green-blue-teal
 
 
+library(ggsci)
+pal_jco()(10)
+ggsci::pal_jco()(10)
+
+library(wesanderson)
+wes_palette(n = 10, name = "GrandBudapest1")
+
+ggthemes::tableau_color_pal('Tableau 10')(10)
+
 library(colorspace)
 # https://datacadamia.com/lang/r/colorspace
 # https://cran.r-project.org/web/packages/colorspace/vignettes/colorspace.html#Usage_with_ggplot2
