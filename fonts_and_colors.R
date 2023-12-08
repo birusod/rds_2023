@@ -39,13 +39,27 @@ pcols <- c('#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd',
 #        muted purple-chestnut brown-raspberry yogurt pink
 #        middle gray-curry yellow-green-blue-teal
 
+devtools::install_github('bbc/bbplot')
+library(bbplot)
+ggplot2::msleep |> drop_na() |> 
+  ggplot(aes(vore, fill = vore)) +
+  geom_bar() +
+  bbc_style()
+  
 
 library(ggsci)
 pal_jco()(10)
 ggsci::pal_jco()(10)
 
 library(wesanderson)
-wes_palette(n = 10, name = "GrandBudapest1")
+
+wes_palette(n = 4, name = "GrandBudapest1")
+wesanderson::wes_palette("BottleRocket2")
+c(wesanderson::wes_palette("GrandBudapest2"), 
+  wesanderson::wes_palette("GrandBudapest1"), 
+  wesanderson::wes_palette("BottleRocket2"))
+
+
 
 ggthemes::tableau_color_pal('Tableau 10')(10)
 

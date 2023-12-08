@@ -4,9 +4,13 @@
 pacman::p_load(
   tidytuesdayR, tidyverse, janitor, scales, ggthemes,
   showtext, patchwork, ggtext, glue, 
-  africamonitor,  
+  africamonitor, countrycode, ggimage,
   GGally, ggalt, ggrepel, ggbump, cowplot)
 
+install.packages("ggflags", repos = c(
+  "https://jimjam-slam.r-universe.dev",
+  "https://cloud.r-project.org"))
+library(ggflags)
 
 # Loading data -------------------------------------------------------------
 
@@ -27,7 +31,7 @@ showtext_auto()
 bg_col <- ""
 text_col <- ""
 highlight_col <- ""
-
+pretty_colors <- c("#0f4c5c", "#5f0f40","#0b8199","#9a031e","#b32520","#ffca3a", "#fb8b24")
 
 # Wrangling Data ----------------------------------------------------------
 dd <- tuesdata$life_expectancy
@@ -68,14 +72,14 @@ df |>
   filter(!duplicated(country)) |> 
   view()
 
-## map data: 
+##  data: 
 
 ### African countries
-am_countries |> head() |> view()
+# am_countries |> head() |> view()
 african_countries <- 
   am_countries |> 
-  select(name = Country, iso =  Country_ISO, code  = ISO3, 
-         region = Region, subregion  = Region_Detailed)
+  select(name = Country, name2 =  Country_ISO, code  = ISO3, 
+         code2 = ISO2, region = Region, subregion  = Region_Detailed)
 
 
 ## Subsetting african data ----
@@ -96,6 +100,37 @@ bad <- afr |>
   filter(year %in% c(1950, 2021)) |> 
   select(country, year, lifeexp) |> 
   mutate(year = factor(year))
+
+
+
+##  Selected  countries:  -------
+# df |>  filter(team %in% (df |> 
+#                    distinct(team, mean_rank) |> 
+#                    top_n(10, -mean_rank) |> 
+#                    pull(team)))
+
+#afr |>  distinct(name, code2) |> view()
+mcs <- c('Mali', 'Niger', 'Burkina Faso', 'Sierra Leone', 'Guinea', 'Liberia')
+df6 <- afr |> 
+  filter(name  %in% mcs, year %in% c(1950, 1960, 1980, 2000, 2020)) |> 
+  select(name, year, lifeexp) |> 
+  group_by(year) |> 
+  mutate(rank = rank(-lifeexp, ties.method = "random")) |> 
+  ungroup()
+
+
+ccode <- 
+  countrycode(df6$name |> unique() |> sort(),
+            origin = "country.name",
+            destination = "genc2c") |> 
+  tolower() |> 
+  set_names(df6$name |> unique() |> sort())
+ccode['Mali']
+
+df6 <- df6 |> 
+  left_join(afr |> distinct(name, code2), by  = join_by('name')) |> 
+  mutate(code = str_to_lower(code2))
+  
 
 # Define texts & annotations --------------------------------------------
 
@@ -240,11 +275,11 @@ afr |>
 afr |> 
   filter(subregion == 'Middle Africa',
          year >= 1950,
-         year <= 2020) %>% 
-  select(country, lifeexp, decade) %>% 
+         year <= 2020) |> 
+  select(country, lifeexp, decade) |> 
   group_by(country, decade) |> 
   summarise(lifeexp =  mean(lifeexp), .groups = 'drop') |> 
-  pivot_wider(names_from = decade, values_from = lifeexp) %>% 
+  pivot_wider(names_from = decade, values_from = lifeexp) |> 
   ggparcoord(
     columns = 2:ncol(.), 
     groupColumn = "country",
@@ -256,8 +291,8 @@ afr |>
 
 afr_pp <- afr |> 
   filter(subregion == 'Middle Africa',
-         decade %in% c(1950, 2020)) %>% 
-  select(country, lifeexp, decade) %>% 
+         decade %in% c(1950, 2020)) |> 
+  select(country, lifeexp, decade) |> 
   group_by(country, decade) |> 
   summarise(lifeexp =  mean(lifeexp), .groups = 'drop') 
 
@@ -358,6 +393,62 @@ afr_bb2 |>
         plot.title = element_text(face = 'bold', size = 18, hjust = .5),
         plot.subtitle = element_text(size = 16, hjust = .5))
 
+
+
+## Selected ccountries ------
+
+# Not working. To be continued....
+
+# df6 |> 
+#   ggplot(aes(year, rank, group = name, color = name, fill = name)) +
+#   geom_bump(smooth = 10, size = 1.5, lineend = "round") +
+#   ggimage::geom_flag(aes(x = 1950, image = code), size = 0.1)
+#   geom_text(data = df6 |> filter(year == 2020),
+#             aes(label = name),
+#             color = "black") +
+#   ggimage::geom_flag(data = df6 |> filter(year == 1950),
+#                      aes(y = rank, image = code)) +
+#   ggimage::geom_flag(data = df6 |> filter(year == 1950), 
+#             aes(image = code)) +
+#   scale_color_manual(
+#     values = pretty_colors) +
+#   scale_fill_manual(values = c(wesanderson::wes_palette("GrandBudapest2"), wesanderson::wes_palette("GrandBudapest1"), wesanderson::wes_palette("BottleRocket2"))) +
+#   scale_y_reverse(breaks = 1:100) +
+#   scale_x_continuous(breaks = df$year |> unique()) +
+#   theme_minimal() +
+#   theme(legend.position = "none",
+#         panel.grid = element_blank(),
+#         panel.background = element_rect(fill = "gray60", color = "transparent"),
+#         plot.background = element_rect(fill = "gray60"),
+#         text = element_text(color = "white")) +
+#   labs(x = NULL,
+#        y = NULL,
+#        title = "Hosting is boosting the number of medals",
+#        subtitle = "Number of medals on Summer Olympics 1992 - 2016")
+# 
+# df6 |>filter(year == 1950)
+# 
+# df6 |> 
+#   group_by(name) |> 
+#   top_n(1, lifeexp) |> 
+#   ggplot(aes(x = fct_reorder(name, lifeexp), 
+#            y = lifeexp, 
+#            group = name, 
+#            fill = name)) +
+#   geom_col() +
+#   coord_flip() +
+#   geom_text(aes(label = round(lifeexp, digits = 0)), 
+#             hjust = 1, 
+#             size = 5,
+#             position = position_dodge(width = 1),
+#             inherit.aes = TRUE) +
+#   expand_limits(y = 63) +
+#   labs(title = "Title",
+#        subtitle = "Subtitle") +
+#   theme(legend.position = "none") +
+#   scale_fill_manual(values = pretty_colors) +
+#   ggimage::geom_flag(aes(y = -4, image = code), size = 0.1) #+ #ggimage::
+  #ggflags::geom_flag(aes(y = -4, country = code), size = 0.1)
 
 # Saving Plots and Gifs ------------------------------------------------------
 
