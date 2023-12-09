@@ -12,11 +12,17 @@
 <h2 align="left"> 3. Data Wrangling </h2>
 <h2 align="left"> 4. Viz </h2>
 
+<h3 align="left"> Plot-1 </h3>
 <p align="center">
-  <img src="/2023/w49_LifeExp/plots_w49/final_plot.jpeg" width="60%">
+  <img src="/2023/w49_LifeExp/plots_w49/final_plot1.jpeg" width="60%">
 </p>
 
+<br/>
 
+<h3 align="left"> Plot-2 </h3>
+<p align="center">
+  <img src="/2023/w49_LifeExp/plots_w49/final_plot2.jpeg" width="60%">
+</p>
 
 
 <p align="center">

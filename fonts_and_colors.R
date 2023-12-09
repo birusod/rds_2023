@@ -70,7 +70,7 @@ library(colorspace)
 cscols <- choose_palette()
 hcl_palettes(plot = TRUE)
 qualitative_hcl(4, palette = "Dark 3")
-sequential_hcl(4, palette = 'Dark Mint')
+sequential_hcl(4, palette = 'Dark Mint') 
 diverge_hcl(4, palette = 'Tropic')
 
 

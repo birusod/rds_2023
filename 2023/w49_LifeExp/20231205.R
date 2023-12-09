@@ -4,7 +4,7 @@
 pacman::p_load(
   tidytuesdayR, tidyverse, janitor, scales, ggthemes,
   showtext, patchwork, ggtext, glue, 
-  africamonitor, countrycode, ggimage,
+  africamonitor, countrycode, ggimage, ggpath,
   GGally, ggalt, ggrepel, ggbump, cowplot)
 
 install.packages("ggflags", repos = c(
@@ -23,6 +23,8 @@ tuesdata$life_expectancy_female_male |> head(3)
 # Loading fonts ------------------------------------------------------------
 
 font_add_google("Roboto", "roboto")
+font_add_google("Fira code", "firac")
+font_add_google("Fira sans", "firas")
 showtext_auto()
 
 
@@ -33,6 +35,10 @@ text_col <- ""
 highlight_col <- ""
 pretty_colors <- c("#0f4c5c", "#5f0f40","#0b8199","#9a031e","#b32520","#ffca3a", "#fb8b24")
 
+library(MetBrewer)
+met.brewer(name="VanGogh1", n=7, type="discrete")
+met.brewer(name="VanGogh1", n=10, type="continuous")
+mbcols <- met.brewer(name="OKeeffe1", n=30, type="continuous")[23:30]
 # Wrangling Data ----------------------------------------------------------
 dd <- tuesdata$life_expectancy
 range(dd$Year)
@@ -130,7 +136,14 @@ ccode['Mali']
 df6 <- df6 |> 
   left_join(afr |> distinct(name, code2), by  = join_by('name')) |> 
   mutate(code = str_to_lower(code2))
-  
+
+
+## flags ----
+flags <- c('Mali', 'Niger', 'Senegal', 'Chad', 'Guinea', 'Liberia', 'Ghana')
+
+dff <- afr |> 
+  filter(name  %in% flags, year == 2021) |> 
+  select(name, year, lifeexp)
 
 # Define texts & annotations --------------------------------------------
 
@@ -449,6 +462,43 @@ afr_bb2 |>
 #   scale_fill_manual(values = pretty_colors) +
 #   ggimage::geom_flag(aes(y = -4, image = code), size = 0.1) #+ #ggimage::
   #ggflags::geom_flag(aes(y = -4, country = code), size = 0.1)
+
+
+## Flags plots -----
+# https://uxwing.com/chad-flag-round-circle-icon/
+
+flag_path <- "/Users/birusod/Documents/DataScienceDocs/RDocs/ggplot2/flags/"
+
+fcols <- c("#0f4c5c", "#0b8199", "#5f0f40", "#9a031e", 
+           "#b32520", "#fb8b24","#ffca3a" )
+
+dff |> 
+  mutate(flag = glue(flag_path, '{name}-flag-round-circle-icon.png'),
+         name = fct_reorder(name, lifeexp)) |> 
+  ggplot(aes(lifeexp, name, fill = name)) +
+  geom_col(width = .9, show.legend = FALSE) +
+  geom_from_path(aes(lifeexp, name, path = flag), width = 0.12) +
+  scale_fill_manual(
+    values = mbcols,
+    guide = "none") +
+  geom_label(
+    aes(x = 0, y = name, label = paste0(name, '\n',round(lifeexp, 0), ' years')),
+    position = position_dodge(0),
+    size = 4, color = 'wheat', hjust = 'left', label.size = 0,
+    family = "roboto", fontface = "bold") +
+  scale_x_continuous(expand = c(.05, .01),
+                     limits = c(0, 80)) +
+  labs(title = 'LIFE EXPECTENCY IN AFRICA IN 2021',
+       subtitle = 'Selected countries') +
+  theme_void() +
+  theme(
+    plot.background = element_rect(fill = 'black'),
+    plot.title = element_text(family = 'roboto', face = 'bold', 
+                              color = '#94d2bd', size = 16, hjust = .5),
+    plot.subtitle = element_text(family = 'firas', face = 'italic', 
+                              color = '#0a9396', size = 16, 
+                              hjust = .5)
+  )
 
 # Saving Plots and Gifs ------------------------------------------------------
 
