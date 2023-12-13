@@ -14,6 +14,8 @@ tuesdata <- tidytuesdayR::tt_load(date_chr)
 # Loading fonts ------------------------------------------------------------
 
 font_add_google("Roboto", "roboto")
+font_add_google("Fira code", "firac")
+font_add_google("Fira sans", "firas")
 showtext_auto()
 
 
