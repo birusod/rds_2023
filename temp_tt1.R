@@ -5,11 +5,11 @@
 
 # only need to update these 5 parameters, then: Alt+Cmd+r (Cmd+A+Enter)
 # ****************************************************************
-week_date <- '2023-12-19'
-current_week_folder <- 'w51_HolidayEpisode'
-week_title <- 'Holiday Episode'
-plot_folder <- 'plots_w51'
-final_plot <- 'final_plot_w51.png'
+week_date <- '2023-12-26'
+current_week_folder <- 'w52_RPackages'
+week_title <- 'R Package Structure'
+plot_folder <- 'plots_w52'
+final_plot <- 'final_plot_w52.png'
 #*****************************************************************
 
 use_tt_template <- function(
